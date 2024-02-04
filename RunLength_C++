@@ -1,0 +1,50 @@
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+
+using namespace std;
+
+class Runlength {
+public:
+    static string encode(const string& input) {
+        ostringstream encoded;
+        int count = 1;
+        char prevChar = input[0];
+
+        for (size_t i = 1; i < input.length(); i++) {
+            char currentChar = input[i];
+
+            if (currentChar == prevChar) {
+                count++;
+            }
+            else {
+                if (count > 4) {
+                    encoded << "/" << setw(2) << setfill('0') << count << prevChar;
+                }
+                else {
+                    encoded << string(count, prevChar);
+                }
+                count = 1;
+                prevChar = currentChar;
+            }
+        }
+
+        if (count > 4) {
+            encoded << "/" << setw(2) << setfill('0') << count << prevChar;
+        }
+        else {
+            encoded << string(count, prevChar);
+        }
+
+        return encoded.str();
+    }
+};
+
+int main() {
+    cout << Runlength::encode("aaaaa") << endl; // /05a
+    cout << Runlength::encode("aaaa") << endl;  // aaaa
+    cout << Runlength::encode("abcabcabcabcabc") << endl; // abcabcabcabcabc
+    cout << Runlength::encode("if(a){if(b){if(c){if(d){if(e){5 deeeeeeep}}}}}") << endl; // if(a){if(b){if(c){if(d){if(e){5 d/07ep/05}
+    cout << Runlength::encode("") << endl; // ""
+    return 0;
+}
