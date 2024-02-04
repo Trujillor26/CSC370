@@ -1,0 +1,49 @@
+package runlength;
+
+/**
+ *
+ * @author ricot
+ */
+public class Runlength {
+    public static String encode(String input) {
+        if (input.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder encoded = new StringBuilder();
+        int count = 1;
+        char prevChar = input.charAt(0);
+
+        for (int i = 1; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+
+            if (currentChar == prevChar) {
+                count++;
+            } else {
+                if (count > 4) {
+                    encoded.append("/").append(String.format("%02d", count)).append(prevChar);
+                } else {
+                    encoded.append(String.valueOf(prevChar).repeat(count));
+                }
+                count = 1;
+                prevChar = currentChar;
+            }
+        }
+
+        if (count > 4) {
+            encoded.append("/").append(String.format("%02d", count)).append(prevChar);
+        } else {
+            encoded.append(String.valueOf(prevChar).repeat(count));
+        }
+
+        return encoded.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(encode("aaaaa")); // "/05a"
+        System.out.println(encode("aaaa"));  // "aaaa"
+        System.out.println(encode("abcabcabcabcabc")); // "abcabcabcabcabc"
+        System.out.println(encode("if(a){if(b){if(c){if(d){if(e){5 deeeeeeep}}}}}")); // "if(a){if(b){if(c){if(d){if(e){5 d/07ep/05}"
+        System.out.println(encode("")); // ""
+    }
+}
