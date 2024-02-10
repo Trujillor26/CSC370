@@ -1,0 +1,27 @@
+package access_level;
+
+/**
+ *
+ * @author ricot
+ */
+public class Access_Level {
+    public static String accesslevel(int[] rights, int minPermission) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < rights.length; i++) {
+            if (rights[i] >= minPermission) {
+                result.append("A");
+            } else {
+                result.append("D");
+            }
+        }
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        
+        System.out.println(accesslevel(new int[]{0, 1, 2, 3, 4, 5}, 2));  // "DDAAAA"
+        System.out.println(accesslevel(new int[]{5, 3, 2, 10, 0}, 20));   // "DDDDD"
+        System.out.println(accesslevel(new int[]{}, 1));                   // ""
+        System.out.println(accesslevel(new int[]{34, 78, 9, 52, 11, 1}, 49));  // "DADADD"
+    }
+}
