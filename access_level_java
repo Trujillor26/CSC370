@@ -1,9 +1,3 @@
-package access_level;
-
-/**
- *
- * @author ricot
- */
 public class Access_Level {
     public static String accesslevel(int[] rights, int minPermission) {
         StringBuilder result = new StringBuilder();
